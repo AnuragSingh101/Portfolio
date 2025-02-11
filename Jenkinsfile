@@ -16,29 +16,29 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:latest .'
+                powershell "docker build -t $env:IMAGE_NAME:latest ."
             }
         }
 
         stage('Login to Docker Hub') {
             steps {
-                sh 'echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin'
+                powershell "docker login -u $env:DOCKERHUB_USERNAME -p $env:DOCKERHUB_PASSWORD"
             }
         }
 
         stage('Push Image to Docker Hub') {
             steps {
-                sh 'docker push $IMAGE_NAME:latest'
+                powershell "docker push $env:IMAGE_NAME:latest"
             }
         }
 
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d -p 8080:80 --name portfolio_container $IMAGE_NAME:latest'
+                powershell "docker run -d -p 8080:80 --name portfolio_container $env:IMAGE_NAME:latest"
             }
         }
     }
-    
+
     post {
         success {
             echo 'Deployment Successful! 🎉'
