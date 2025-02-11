@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_USERNAME = 'anus82101'
-        DOCKERHUB_PASSWORD = credentials('anus@82101') // Store in Jenkins Credentials
+        DOCKERHUB_PASSWORD = credentials('docker-hub-token') // Store in Jenkins Credentials
         IMAGE_NAME = 'anus82101/portfolio'
     }
 
